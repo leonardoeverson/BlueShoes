@@ -11,13 +11,22 @@ import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blueshoes.R
 import com.example.blueshoes.data.NavMenuItemsDataBase
+import com.example.blueshoes.domain.NavMenuItem
+import com.example.blueshoes.util.NavMenuItemDetailsLookup
+import com.example.blueshoes.util.NavMenuItemKeyProvider
+import kotlinx.android.synthetic.main.nav_menu.*
 
 class MainActivity : AppCompatActivity() {
 
+    val navMenuItems = NavMenuItemsDataBase(this).items
+    lateinit var rv_menu_items : RecyclerView
+    lateinit var selectNavMenuItems: SelectionTracker<Long>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,21 +52,36 @@ class MainActivity : AppCompatActivity() {
         //navView.setNavigationItemSelectedListener(this)
     }
 
-    private fun initNavMenuItems(){
+    private fun initNavMenuItems() {
 
-        val rv_menu_items: RecyclerView = findViewById(R.id.rv_menu_items);
-        rv_menu_items.setHasFixedSize( false )
-        rv_menu_items.layoutManager = LinearLayoutManager( this )
-        rv_menu_items.adapter = NavMenuItemsAdapter( NavMenuItemsDataBase( this ).items )
+        rv_menu_items = findViewById(R.id.rv_menu_items);
+        rv_menu_items.setHasFixedSize(false)
+        rv_menu_items.layoutManager = LinearLayoutManager(this)
+        rv_menu_items.adapter = NavMenuItemsAdapter(navMenuItems)
 
+        initNavMenuItemsSelection()
     }
 
-    private fun initNavMenuItemsLogged(){
+    private fun initNavMenuItemsSelection() {
+
+        selectNavMenuItems = SelectionTracker.Builder<Long>(
+            "id-selected-items",
+            rv_menu_items,
+            NavMenuItemKeyProvider(navMenuItems),
+            NavMenuItemDetailsLookup(rv_menu_items),
+            StorageStrategy.createLongStorage()
+        )
+            .build()
+
+        (rv_menu_items.adapter as NavMenuItemsAdapter).selectionTracker = selectNavMenuItems
+    }
+
+    private fun initNavMenuItemsLogged() {
 
         val rv_menu_items_logged: RecyclerView = findViewById(R.id.rv_menu_items_logged);
-        rv_menu_items_logged.setHasFixedSize( false )
-        rv_menu_items_logged.layoutManager = LinearLayoutManager( this )
-        rv_menu_items_logged.adapter = NavMenuItemsAdapter( NavMenuItemsDataBase( this ).items )
+        rv_menu_items_logged.setHasFixedSize(false)
+        rv_menu_items_logged.layoutManager = LinearLayoutManager(this)
+        rv_menu_items_logged.adapter = NavMenuItemsAdapter(NavMenuItemsDataBase(this).items)
 
     }
 

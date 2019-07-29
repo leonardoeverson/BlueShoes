@@ -1,15 +1,21 @@
 package com.example.blueshoes.view
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.widget.RecyclerView
 import com.example.blueshoes.R
 import com.example.blueshoes.domain.NavMenuItem
+import com.example.blueshoes.util.NavMenuItemDetails
 
 class NavMenuItemsAdapter (val items: List<NavMenuItem>): RecyclerView.Adapter<NavMenuItemsAdapter.ViewHolder>(){
+
+    lateinit var selectionTracker: SelectionTracker<Long>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -31,9 +37,12 @@ class NavMenuItemsAdapter (val items: List<NavMenuItem>): RecyclerView.Adapter<N
         private val ivIcon : ImageView
         private val tvLabel: TextView
 
+        val itemDetails : NavMenuItemDetails
+
         init {
             ivIcon = itemView.findViewById(R.id.iv_icon)
             tvLabel = itemView.findViewById(R.id.tv_label)
+            itemDetails = NavMenuItemDetails()
         }
 
         fun setData(item: NavMenuItem){
@@ -44,6 +53,17 @@ class NavMenuItemsAdapter (val items: List<NavMenuItem>): RecyclerView.Adapter<N
                 ivIcon.visibility = View.VISIBLE
             }else{
                 ivIcon.visibility = View.GONE
+            }
+
+            itemDetails.item = item
+            itemDetails.adapterPosition = adapterPosition
+
+            if(selectionTracker.isSelected(item.id)){
+                itemView.setBackgroundColor(
+                    ContextCompat.getColor(itemView.context, R.color.colorPrimaryDark)
+                )
+            }else{
+                itemView.setBackgroundColor(Color.TRANSPARENT)
             }
         }
     }

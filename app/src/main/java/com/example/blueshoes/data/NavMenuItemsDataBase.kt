@@ -4,7 +4,49 @@ import android.content.Context
 import com.example.blueshoes.R
 import com.example.blueshoes.domain.NavMenuItem
 
-class NavMenuItemsDataBase (context: Context){
+class NavMenuItemsDataBase (context: Context) : List<NavMenuItem> {
+    override val size: Int
+        get() = TODO("not implemented") //To change initializer of created properties use File | Settings | File Templates.
+
+    override fun contains(element: NavMenuItem): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun containsAll(elements: Collection<NavMenuItem>): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun get(index: Int): NavMenuItem {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun indexOf(element: NavMenuItem): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun isEmpty(): Boolean {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun iterator(): Iterator<NavMenuItem> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun lastIndexOf(element: NavMenuItem): Int {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun listIterator(): ListIterator<NavMenuItem> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun listIterator(index: Int): ListIterator<NavMenuItem> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun subList(fromIndex: Int, toIndex: Int): List<NavMenuItem> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
     val items = listOf(
         NavMenuItem(
