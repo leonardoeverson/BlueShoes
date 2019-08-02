@@ -48,6 +48,10 @@ class NavMenuItemsDataBase (context: Context) : List<NavMenuItem> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    fun getLastItemId() = items.last().id
+
+    fun getFirstItemLoggedId() = itemsLogged.first().id
+
     val items = listOf(
         NavMenuItem(
             R.id.item_all_shoes.toLong(),
