@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     private fun showHideNavMenuViews(){
         if( user.status ){ /* Conectado */
             rl_header_user_not_logged.visibility = View.GONE
-            //fillUserHeaderNavMenu()
+            fillUserHeaderNavMenu()
         }
         else{  /* Não conectado */
             rl_header_user_logged.visibility = View.GONE
@@ -79,10 +79,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun fillUserHeaderNavMenu(){
+        if( user.status ) { /* Conectado */
+            iv_user.setImageResource(user.image)
+            tv_user.text = user.name
+        }
+    }
+
     private fun initNavMenu(savedInstanceState: Bundle?){
 
-        navMenuItems = NavMenuItemsDataBase(this).items
-        navMenuItemsLogged = NavMenuItemsDataBase(this).itemsLogged
+        val navMenu = NavMenuItemsDataBase(this)
+        navMenuItems = navMenu.items
+        navMenuItemsLogged = navMenu.itemsLogged
 
         initNavMenuItems()
         initNavMenuItemsLogged()
